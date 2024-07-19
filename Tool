@@ -1,0 +1,35 @@
+-- Script 1: Click Teleport Tool
+local mouse = game.Players.LocalPlayer:GetMouse()
+local clickTeleportTool = Instance.new("Tool")
+clickTeleportTool.RequiresHandle = false
+clickTeleportTool.Name = "Click Teleport"
+clickTeleportTool.Activated:Connect(function()
+    local pos = mouse.Hit + Vector3.new(0, 2.5, 0)
+    pos = CFrame.new(pos.X, pos.Y, pos.Z)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = pos
+end)
+clickTeleportTool.Parent = game.Players.LocalPlayer.Backpack
+
+-- Script 2: Fake Omni Tool with Animation
+local fakeOmniTool = Instance.new("Tool")
+fakeOmniTool.Name = "Fake Omni"
+fakeOmniTool.RequiresHandle = false
+fakeOmniTool.CanBeDropped = false
+
+-- Add the tool to the player's backpack
+local player = game.Players.LocalPlayer
+fakeOmniTool.Parent = player:WaitForChild("Backpack")
+
+-- Create the animation
+local anim2 = Instance.new("Animation")
+anim2.AnimationId = "rbxassetid://13927612951"
+
+-- Function to play the animation when the tool is activated
+fakeOmniTool.Activated:Connect(function()
+    local character = player.Character or player.CharacterAdded:Wait()
+    local humanoid = character:WaitForChild("Humanoid")
+    
+    -- Load and play the animation
+    local playAnim2 = humanoid:LoadAnimation(anim2)
+    playAnim2:Play()
+end)
